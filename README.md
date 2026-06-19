@@ -1,6 +1,7 @@
 # Smart Face Attendance
 
-A desktop attendance system built with CustomTkinter and insightface (ArcFace). Uses face recognition to mark attendance — no manual roll calls.[](output.png)
+A desktop attendance system built with CustomTkinter and insightface (ArcFace). Uses face recognition to mark attendance — no manual roll calls.
+[Smart-Face-Attendance](output.png)
 
 ## How it works
 
