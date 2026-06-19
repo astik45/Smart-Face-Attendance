@@ -2,6 +2,8 @@
 
 A desktop attendance system built with CustomTkinter and insightface (ArcFace). Uses face recognition to mark attendance — no manual roll calls.
 
+output.png
+
 ## How it works
 
 1. Register a student with their name and ID. The app captures 100 face samples from the webcam.
