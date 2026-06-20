@@ -328,9 +328,7 @@ class AttendanceApp:
                     continue
                 if len(img.shape) == 2:
                     img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
-                pad = max(img.shape[0], img.shape[1])
-                padded = cv2.copyMakeBorder(img, pad, pad, pad, pad, cv2.BORDER_REPLICATE)
-                faces = app.get(padded)
+                faces = app.get(img)
                 if not faces:
                     continue
                 serial = int(os.path.split(ip)[-1].split(".")[1])
@@ -377,12 +375,11 @@ class AttendanceApp:
                 x1, y1, x2, y2 = bbox[0], bbox[1], bbox[2], bbox[3]
                 x1, y1 = max(0, x1), max(0, y1)
                 x2, y2 = min(img.shape[1], x2), min(img.shape[0], y2)
-                cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 0), 2)
                 sampleNum += 1
-                face_crop = img[y1:y2, x1:x2]
                 cv2.imwrite(
                     f"TrainingImage/{name}.{serial}.{Id}.{sampleNum}.jpg",
-                    face_crop)
+                    img)
+                cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 0), 2)
                 cv2.imshow("Capturing Face Images - Press Q to quit early", img)
             if cv2.waitKey(100) & 0xFF == ord("q") or sampleNum > 100:
                 break
@@ -483,7 +480,7 @@ class AttendanceApp:
                 best_idx = np.argmin(distances)
                 best_dist = distances[best_idx]
                 label = "Unknown"
-                if best_dist < 0.55:
+                if best_dist < 0.75:
                     serial = known_ids[best_idx]
                     student = serial_to_student.get(serial)
                     if student:
